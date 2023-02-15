@@ -1,0 +1,19 @@
+### Module positions - created on Sat Jan 21 11:00:48 2023 ###
+### Printed by Pcbnew version (6.0.9)
+## Unit = mm, Angle = deg.
+## Side : All
+# Ref     Val              Package                                         PosX       PosY       Rot  Side
+C1        0.1u             C_0201_0603Metric                           108.5220  -114.0460    0.0000  top
+C2        2.2u             C_0201_0603Metric                           104.2520  -106.9340    0.0000  top
+C3        10n              C_0201_0603Metric                           108.0920  -106.9340  180.0000  top
+J1        Conn_01x04_Male  PinHeader_1x04_P1.27mm_Vertical             104.2720  -117.6020   90.0000  top
+J2        Conn_01x04_Male  PinHeader_1x04_P1.27mm_Vertical             100.8380  -107.7340    0.0000  top
+J3        Conn_01x04_Male  PinHeader_1x04_P1.27mm_Vertical             111.2520  -107.7340    0.0000  top
+R1        10k              R_0201_0603Metric                           108.5220  -115.0620  180.0000  top
+R2        10k              R_0201_0603Metric                           103.8220  -114.5540    0.0000  top
+R3        10k              R_0201_0603Metric                           103.8220  -115.5700    0.0000  top
+R4        10k              R_0201_0603Metric                           103.8220  -113.5380    0.0000  top
+R5        47k              R_0201_0603Metric                           106.1720  -106.9340  180.0000  top
+U1        LIS3MDLTR        VFLGA-12_2x2mm                              106.1720  -114.5540  180.0000  top
+U2        DRV8833RTY       Texas_S-PWQFN-N16_EP2.1x2.1mm_ThermalVias   106.1720  -110.2360   90.0000  top
+## End
