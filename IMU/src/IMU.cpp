@@ -1,3 +1,13 @@
+/*
+/  Tommy Le
+/  Northern Illinois University
+/  2/14/2023
+/  Description:
+/  Code uses a Pololu AltIMU10 v5 to determine orientation of a system.
+/  Simple complementary filters are used to achieve robust data.
+/  Future work includes getting position data.
+*/
+
 #include <Arduino.h>
 #include <Wire.h> // I2C lib
 #include <LSM6.h> // Accel and Gyro lib
