@@ -1,13 +1,3 @@
-/*
-/  Tommy Le
-/  Northern Illinois University
-/  2/14/2023
-/  Description:
-/  Code uses a Pololu AltIMU10 v5 to determine orientation of a system.
-/  Simple complementary filters are used to achieve robust data.
-/  Future work includes getting position data.
-*/
-
 #include <Arduino.h>
 #include <Wire.h> // I2C lib
 #include <LSM6.h> // Accel and Gyro lib
@@ -118,6 +108,11 @@ float gyro_pitch = 0;
 float gyro_roll = 0;
 float gyro_yaw = 0;
 int calib_cnt = 100;
+
+//LP filter variables
+const float alpha = 0.5; //bigger = not enough filtering, lower = too much filtering
+double filtered_data[6] = {0, 0, 0, 0, 0, 0};
+double data[3] = {0, 0, 0};
 
 //__________________Functions_____________________________//
 void transform(float accX, float accY, float accZ, float matrix[3][3], String acc )
@@ -308,6 +303,22 @@ void loop()
   ax = gyroAcc.a.x * scaleA / 100.0;
   ay = gyroAcc.a.y * scaleA / 100.0;
   az = gyroAcc.a.z * scaleA / 100.0;
+
+  data[0] = ax;
+  data[1] = ay;
+  data[2] = az; 
+
+  filtered_data[3] = alpha * data[0] + (1 - alpha) * filtered_data[0];
+  filtered_data[4] = alpha * data[1] + (1 - alpha) * filtered_data[1];
+  filtered_data[5] = alpha * data[2] + (1 - alpha) * filtered_data[2];
+
+  filtered_data[0] = filtered_data[3];
+  filtered_data[1] = filtered_data[4];
+  filtered_data[2] = filtered_data[5];
+
+  ax = filtered_data[3];
+  ay = filtered_data[4];
+  az = filtered_data[5];
 
   //  Serial.print("Acc: ");
   //  Serial.print(ax);
