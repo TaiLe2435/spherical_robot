@@ -240,13 +240,13 @@ void setup()
   psiOffset = 0;
 
 //_____________Calib Mag_________________//
-  magOffset[0] = -15845;
-  magOffset[1] = 4232;
-  magOffset[2] = -4223;
+  magOffset[0] = -15845; //mxMin
+  magOffset[1] = 4232;   //myMin
+  magOffset[2] = -4223;  //mzMin
 
-  magGain[0] = (-6822 - -15845);
-  magGain[1] = (5568 - 4232);
-  magGain[2] = (13157 - -4223);
+  magGain[0] = (-6822 - -15845);  //mxMax - mxMin
+  magGain[1] = (5568 - 4232);     //myMax - myMin
+  magGain[2] = (13157 - -4223);   //mzMax - mzMin
 
 //_____________Calib Gyro_________________//
   for(int i = 0; i < calib_cnt; i++)
