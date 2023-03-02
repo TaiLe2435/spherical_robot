@@ -7,5 +7,7 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  float heading = 0;
+  heading = poseEstimation();
+  Serial.println(heading);
 }

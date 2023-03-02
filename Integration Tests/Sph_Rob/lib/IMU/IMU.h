@@ -14,4 +14,4 @@ unsigned long CalculateDeltaTime();
 
 void initIMU();
 
-void poseEstimation(); 
+float poseEstimation(); 

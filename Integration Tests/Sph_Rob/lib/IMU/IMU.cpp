@@ -273,7 +273,7 @@ void initIMU()
   delay(200);
 }
 
-void poseEstimation() 
+float poseEstimation() 
 {
   gyroAcc.read();
   mag.read();
@@ -507,13 +507,14 @@ void poseEstimation()
 // //  Serial.print(" ");
 // //  Serial.println(s[2][0]);
 
-  Serial.print("Angles: ");
-  Serial.print(roll);
-  Serial.print(" ");
-  Serial.print(pitch);
-  Serial.print(" ");
-  Serial.println(yaw);
+  // Serial.print("Angles: ");
+  // Serial.print(roll);
+  // Serial.print(" ");
+  // Serial.print(pitch);
+  // Serial.print(" ");
+  // Serial.println(yaw);
 
-  delay(100);
+  // delay(100);
+  return yaw;
 }
 
