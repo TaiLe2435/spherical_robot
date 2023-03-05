@@ -1,5 +1,4 @@
 #include <Arduino.h>
-#include <BluetoothSerial.h>
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -24,6 +23,7 @@ void move(int uR, int uL);
 void setup() 
 {
   Serial.begin(115200);
+  Serial.println("Hello");
 
   // MAG Init
   Wire.begin();
