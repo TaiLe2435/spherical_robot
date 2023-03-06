@@ -1,8 +1,8 @@
 #include <Arduino.h>
 
-void BTinit();
+// void BTinit();
 
-void BTmove();
+// void BTmove();
 
 void move(int uR, int uL);
 

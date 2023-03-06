@@ -24,39 +24,23 @@ void move(int uR, int uL);
 void stop();
 int* circle(float radius);
 
-BluetoothSerial SerialBT;
     
-void BTinit()
-{
-  SerialBT.begin("ESP32test");
-  delay(1000);
+// void BTmove()
+// {
+//   String inputPWM = "0";
+//   // String inputPWM;
+//   if (SerialBT.available() > 0) {
+//     // int i = 0;
+//     inputPWM = SerialBT.readStringUntil('\n').toInt();
+//     // SerialBT.println(inputPWM);
 
-  // Serial.begin(9600);
-  // ptr = circle(0.05);
-
-  // Serial.println(" "); // purge terminal
-
-  // Serial.print(ptr[0]);
-  // Serial.print(' ');
-  // Serial.println(ptr[1]);
-}
-    
-void BTmove()
-{
-  String inputPWM = "0";
-  // String inputPWM;
-  if (SerialBT.available() > 0) {
-    // int i = 0;
-    inputPWM = SerialBT.readStringUntil('\n').toInt();
-    // SerialBT.println(inputPWM);
-
-    int PWM = inputPWM.toInt();
-    move(PWM, PWM);
-    //  SerialBT.print("moving ");
-    //  SerialBT.println(PWM);
-  }
-  delay(50);
-}
+//     int PWM = inputPWM.toInt();
+//     move(PWM, PWM);
+//     //  SerialBT.print("moving ");
+//     //  SerialBT.println(PWM);
+//   }
+//   delay(50);
+// }
 
 void move(int uR, int uL) {
   // Setting up motor driver

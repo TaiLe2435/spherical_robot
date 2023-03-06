@@ -12,6 +12,6 @@ void trapezoidal(int s1[3][1], int s0[3][1], int ic[3][1]);
 
 unsigned long CalculateDeltaTime();
 
-void initIMU();
+float* initIMU();
 
-float poseEstimation(); 
+float poseEstimation(float gyro_roll_cal, float gyro_pitch_call, float gyro_yaw_cal); 

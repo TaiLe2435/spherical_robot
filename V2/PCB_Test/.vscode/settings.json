@@ -251,5 +251,7 @@
     "**/.vscode",
     "**/.vscode/**"
   ],
-  "C_Cpp_Runner.useAddressSanitizer": false
+  "C_Cpp_Runner.useAddressSanitizer": false,
+  "cmake.configureOnOpen": false,
+  "cmake.sourceDirectory": "${workspaceFolder}/.pio/libdeps/xiaoblesense_arduinocore_mbed/Adafruit BusIO"
 }

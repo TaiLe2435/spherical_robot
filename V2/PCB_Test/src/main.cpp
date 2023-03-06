@@ -3,7 +3,7 @@
 #include <string>
 #include <sstream>
 #include <Wire.h> // I2C lib
-#include <LSM6.h> // Accel and Gyro lib
+// #include <LSM6.h> // Accel and Gyro lib
 #include <LIS3MDL.h> // Magnetometer lib
 
 // Motor Driver Pins
@@ -12,7 +12,7 @@ const int BPHASE = 3; // bin2
 const int AENBL = 1; // ain2
 const int APHASE = 0; // ain1
 
-LSM6 gyroAcc; // creating objects
+// LSM6 gyroAcc; // creating objects
 LIS3MDL mag;
 
 float mx, my, mz;
@@ -53,7 +53,7 @@ void loop()
   Serial.println(mz);
 
   // move motors
-  // move(80, 80);
+  move(80, 80);
 
 }
 

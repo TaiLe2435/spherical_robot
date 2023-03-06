@@ -266,5 +266,6 @@
     "**/.vscode",
     "**/.vscode/**"
   ],
-  "cmake.configureOnOpen": false
+  "cmake.configureOnOpen": false,
+  "cmake.sourceDirectory": "${workspaceFolder}/.pio/libdeps/tinypico/Adafruit BusIO"
 }

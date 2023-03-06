@@ -23,6 +23,16 @@ float mx, my, mz;
 float magGlobalX, magGlobalY, magGlobalZ;
 float magOffset[3], magGain[3];
 
+//_____________Calib Mag_________________//
+float magOffsetX = (float)-15845.0;
+float magOffsetY = (float)4232.0;
+float magOffsetZ = (float)-4223.0;
+
+float magGainX = (float)(-6822.0 - -15845.0);
+float magGainY = (float)(5568.0 - 4232.0);
+float magGainZ = (float)(13157.0 - -4223.0);
+
+
 // Angle Variables
 int a, b, drift;
 int roll, pitch, yaw;
@@ -110,6 +120,7 @@ float gyro_pitch = 0;
 float gyro_roll = 0;
 float gyro_yaw = 0;
 int calib_cnt = 100;
+float calib[3];
 
 //LP filter variables
 const float alpha = 0.5; //bigger = not enough filtering, lower = too much filtering
@@ -213,7 +224,7 @@ unsigned long CalculateDeltaTime()
   return deltaTime;
 }
 
-void initIMU() 
+float* initIMU() 
 {
   Serial.begin(115200);
   Wire.begin();
@@ -241,14 +252,6 @@ void initIMU()
 
   psiOffset = 0;
 
-//_____________Calib Mag_________________//
-  magOffset[0] = -15845;
-  magOffset[1] = 4232;
-  magOffset[2] = -4223;
-
-  magGain[0] = (-6822 - -15845);
-  magGain[1] = (5568 - 4232);
-  magGain[2] = (13157 - -4223);
 
 //_____________Calib Gyro_________________//
   for(int i = 0; i < calib_cnt; i++)
@@ -264,16 +267,22 @@ void initIMU()
   gyro_roll_cal  /= calib_cnt;
   gyro_yaw_cal   /= calib_cnt;
 
-  Serial.print("Gyro calib: ");
-  Serial.print(gyro_roll_cal);
-  Serial.print(" ");
-  Serial.print(gyro_pitch_cal);
-  Serial.print(" ");
-  Serial.println(gyro_yaw_cal);
-  delay(200);
+  // Serial.print("Gyro calib: ");
+  // Serial.print(gyro_roll_cal);
+  // Serial.print(" ");
+  // Serial.print(gyro_pitch_cal);
+  // Serial.print(" ");
+  // Serial.println(gyro_yaw_cal);
+  // delay(200);
+
+  calib[0] = gyro_roll_cal;
+  calib[1] = gyro_pitch_cal;
+  calib[2] = gyro_yaw_cal;
+
+  return calib;  
 }
 
-float poseEstimation() 
+float poseEstimation(float gyro_roll_cal, float gyro_pitch_cal, float gyro_yaw_cal) 
 {
   gyroAcc.read();
   mag.read();
@@ -331,9 +340,9 @@ float poseEstimation()
   
 //________________Mag data (uT)__________________________//
 
-  mx = ((mag.m.x  - magOffset[0]) / magGain[0]) / scaleM * -1;
-  my = ((mag.m.y  - magOffset[1]) / magGain[1]) / scaleM * -1;
-  mz = ((mag.m.z  - magOffset[2]) / magGain[2]) / scaleM * -1;
+  mx = ((mag.m.x  - magOffsetX) / magGainX) / scaleM * -1;
+  my = ((mag.m.y  - magOffsetY) / magGainY) / scaleM * -1;
+  mz = ((mag.m.z  - magOffsetZ) / magGainZ) / scaleM * -1;
 
   //  Serial.print("Mag: ");
   //  Serial.print(mx);
@@ -514,7 +523,7 @@ float poseEstimation()
   // Serial.print(" ");
   // Serial.println(yaw);
 
-  // delay(100);
+  delay(100);
   return yaw;
 }
 
