@@ -23,8 +23,14 @@ def clickEvent(event, x, y, flags, params):
         print(x, ' ', y)
         point = (x,y)
 
+def euclid(center1, center2):
+    dist = np.sqrt((center1[0]-center2[0])**2+(center1[1]-center2[1])**2)
+    dir = np.arctan2(center2[0]-center1[0], center2[1]-center1[1])
+    
+    return dist, dir
+
 # capturing video
-cap = cv2.VideoCapture(0) # change this value until you get the correct cam
+cap = cv2.VideoCapture(1) # change this value until you get the correct cam
 # cap.set(cv2.CAP_PROP_FPS, 10)
 flag = False
 prevCircle = None
@@ -57,12 +63,16 @@ while True:
     # link for HSV stuff
     # https://www.google.com/imgres?imgurl=https%3A%2F%2Fi.stack.imgur.com%2FTSKh8.png&imgrefurl=https%3A%2F%2Fstackoverflow.com%2Fquestions%2F47483951%2Fhow-to-define-a-threshold-value-to-detect-only-green-colour-objects-in-an-image&tbnid=Jx2H1bjYvu6n_M&vet=12ahUKEwiA6p3xp-z3AhXUXM0KHcAtDh4QMygBegUIARDDAQ..i&docid=d4AswGhN6lbYWM&w=720&h=355&q=hsv%20range&ved=2ahUKEwiA6p3xp-z3AhXUXM0KHcAtDh4QMygBegUIARDDAQ
     # https://www.google.com/imgres?imgurl=https%3A%2F%2Fanswers.opencv.org%2Fupfiles%2F15181560142151344.png&imgrefurl=https%3A%2F%2Fanswers.opencv.org%2Fquestion%2F184281%2Fhow-are-hsv-values-interpreted-in-python%2F&tbnid=mpa5ObAswr1QPM&vet=12ahUKEwi2qKKx8oL4AhVaookEHZVJDLQQxiAoAXoECAAQGQ..i&docid=06ORPhgZpk_9yM&w=743&h=477&itg=1&q=hsv%20range&ved=2ahUKEwi2qKKx8oL4AhVaookEHZVJDLQQxiAoAXoECAAQGQ
-    lower = np.array([25, 52, 72])             # change upper and lower values for colors
-    upper = np.array([102, 255, 255])
-    mask = cv2.inRange(hsv, lower, upper)
+    green_lower = np.array([25, 52, 72])             # change upper and lower values for colors
+    green_upper = np.array([102, 255, 255])
+    green_mask = cv2.inRange(hsv, green_lower, green_upper)
+    
+    blue_lower = np.array([94, 80, 2])             # change upper and lower values for colors
+    blue_upper = np.array([120, 255, 255])
+    blue_mask = cv2.inRange(hsv, blue_lower, blue_upper)
    
-    # tracking color
-    contours, hierarchy=cv2.findContours(mask,cv2.RETR_EXTERNAL ,cv2.CHAIN_APPROX_TC89_L1)
+    # tracking green color
+    contours, hierarchy=cv2.findContours(green_mask,cv2.RETR_EXTERNAL ,cv2.CHAIN_APPROX_TC89_L1)
     for pic, contour in enumerate(contours):
         area = cv2.contourArea(contour)
         maxArea = max(contours, key = cv2.contourArea)
@@ -73,28 +83,66 @@ while True:
             # finding center of target
             xC = int(x + w/2)
             yC = int(y + h/2)
-            center = (xC, yC)
+            green_center = (xC, yC)
             # print(center)
            
             # plotting bounding box and center
-            # img = cv2.rectangle(img, (x, y),
-            #                         (x + w, y + h),
-            #                         (0, 255, 0), 2)
-            # cv2.circle(img, center, 10, (0, 255, 0), -1)
-            # cv2.putText(img, "Target", (x, y),
-            #             cv2.FONT_HERSHEY_SIMPLEX, 1.0,
-            #             (0, 255, 0))
+            img = cv2.rectangle(img, (x, y),
+                                    (x + w, y + h),
+                                    (0, 255, 0), 2)
+            cv2.circle(img, green_center, 10, (0, 255, 0), -1)
+            cv2.putText(img, "Robot", (x, y),
+                        cv2.FONT_HERSHEY_SIMPLEX, 1.0,
+                        (0, 255, 0))
+ 
+    # tracking blue color
+    contours, hierarchy=cv2.findContours(blue_mask,cv2.RETR_EXTERNAL ,cv2.CHAIN_APPROX_TC89_L1)
+    for pic, contour in enumerate(contours):
+        area = cv2.contourArea(contour)
+        maxArea = max(contours, key = cv2.contourArea)
+       
+        # only taking largest area
+        if(area > 10):
+            x, y, w, h = cv2.boundingRect(maxArea)
+            # finding center of target
+            xC = int(x + w/2)
+            yC = int(y + h/2)
+            blue_center = (xC, yC)
+            # print(center)
+           
+            # plotting bounding box and center
+            img = cv2.rectangle(img, (x, y),
+                                    (x + w, y + h),
+                                    (0, 255, 0), 2)
+            cv2.circle(img, blue_center, 10, (0, 255, 0), -1)
+            cv2.putText(img, "Target", (x, y),
+                        cv2.FONT_HERSHEY_SIMPLEX, 1.0,
+                        (0, 255, 0))
    
     cv2.imshow("Robot Tracking", img)
    
     
-    cmd = str(i) + '\n'
-    arduinoData.write(cmd.encode())
-    i += 1
+    # cmd = str(i) + '\n'
+    # # arduinoData.write(cmd.encode())
+    # i += 1
     
-    if i > 200:
-        i = 0
-        
+    # if i > 200:
+    #     i = 0
+    
+    l, theta = euclid(green_center, blue_center)
+    
+    if l <= 75:
+        move_flag = 0
+        # print("stop")
+    elif l > 75:
+        move_flag = 1
+        # print("move")
+    print("l: ", l, " theta: ", -theta * 180 / np.pi) # 75 pixels away threshold
+    
+    theta = int(-theta * 180 / np.pi)
+    cmd = str(theta) + '\n'
+    arduinoData.write(cmd.encode())
+    
     # 'Esc' key to exit video streaming
     key = cv2.waitKey(1)
     if key ==27:
@@ -103,7 +151,7 @@ while True:
 cap.release()
 cv2.destroyAllWindows()
 
-end = "0\n"
-arduinoData.write(end.encode())
+# end = "0\n"
+# arduinoData.write(end.encode())
 
-arduinoData.close()
+# arduinoData.close()

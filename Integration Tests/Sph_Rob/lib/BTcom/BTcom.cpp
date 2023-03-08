@@ -13,21 +13,21 @@ void BTinit()
 
   SerialBT.begin("ESP32test");
   delay(1000);
+  
 
 }
 
 int getBT()
 {
-    String inputPWM = "0";
-
+    String input = "0";
+    SerialBT.flush();
     if (SerialBT.available() > 0) 
     {
 
-        inputPWM = SerialBT.readStringUntil('\n').toInt();
+        input = SerialBT.readStringUntil('\n').toInt();
 
-
-        int PWM = inputPWM.toInt();
-        return PWM;
+        int val= input.toInt();
+        return val;
     }
     return 9999;
 }

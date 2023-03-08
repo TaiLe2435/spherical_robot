@@ -391,7 +391,7 @@ float poseEstimation(float gyro_roll_cal, float gyro_pitch_cal, float gyro_yaw_c
     ax0 = ax * -1;
     ay0 = ay * -1;
     az0 = az * -1;
-    psi_0 = psi;
+    psi_0 = 0;
     
   }
 
