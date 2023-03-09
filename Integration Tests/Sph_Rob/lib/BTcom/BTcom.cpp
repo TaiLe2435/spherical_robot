@@ -20,7 +20,6 @@ void BTinit()
 int getBT()
 {
     String input = "0";
-    SerialBT.flush();
     if (SerialBT.available() > 0) 
     {
 
@@ -31,3 +30,4 @@ int getBT()
     }
     return 9999;
 }
+

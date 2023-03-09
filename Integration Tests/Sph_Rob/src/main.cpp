@@ -18,23 +18,35 @@ void setup()
 void loop() 
 {
   // Test variables
-  float kP = 0.2;
+  float kP = 0.6;
   bool flag = true;
   // float desired = 0; // is going to be coming from python program
 
-  float desired = getBT();
-  Serial.println(desired);
+  int desired = getBT();
+  //Serial.println(desired);
 
   float heading = poseEstimation(gyroCalib[0], gyroCalib[1], gyroCalib[2]);
   // Serial.println(heading);
 
   // P control                                                          // works
-  // if(desired != 9999) // py will set flag 1 until robot gets to target pos
-  // {
-  //   float error = desired - heading;
-  //   float leftWheel =  kP*error;
-  //   float rightWheel = kP*error;
-  //   move(leftWheel, rightWheel);
-  // }
+  if(desired != 9999 && flag == true) // py will set flag 1 until robot gets to target pos
+  {
+    float error = desired - (int)heading;
+    float leftWheel =  100 + kP*error;
+    float rightWheel = 100 - kP*error;
+    move(leftWheel, rightWheel);
 
+    // Serial.print("left: ");
+    // Serial.print(leftWheel);
+    // Serial.print(" right: ");
+    // Serial.print(rightWheel);
+    // Serial.print(" desired: ");
+    // Serial.println(desired);
+
+  }
+  else if (desired == 9999)
+  {
+    move(0,0);
+    // Serial.println("9999");
+  }
 }

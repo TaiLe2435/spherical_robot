@@ -64,11 +64,11 @@ while True:
     # https://www.google.com/imgres?imgurl=https%3A%2F%2Fi.stack.imgur.com%2FTSKh8.png&imgrefurl=https%3A%2F%2Fstackoverflow.com%2Fquestions%2F47483951%2Fhow-to-define-a-threshold-value-to-detect-only-green-colour-objects-in-an-image&tbnid=Jx2H1bjYvu6n_M&vet=12ahUKEwiA6p3xp-z3AhXUXM0KHcAtDh4QMygBegUIARDDAQ..i&docid=d4AswGhN6lbYWM&w=720&h=355&q=hsv%20range&ved=2ahUKEwiA6p3xp-z3AhXUXM0KHcAtDh4QMygBegUIARDDAQ
     # https://www.google.com/imgres?imgurl=https%3A%2F%2Fanswers.opencv.org%2Fupfiles%2F15181560142151344.png&imgrefurl=https%3A%2F%2Fanswers.opencv.org%2Fquestion%2F184281%2Fhow-are-hsv-values-interpreted-in-python%2F&tbnid=mpa5ObAswr1QPM&vet=12ahUKEwi2qKKx8oL4AhVaookEHZVJDLQQxiAoAXoECAAQGQ..i&docid=06ORPhgZpk_9yM&w=743&h=477&itg=1&q=hsv%20range&ved=2ahUKEwi2qKKx8oL4AhVaookEHZVJDLQQxiAoAXoECAAQGQ
     green_lower = np.array([25, 52, 72])             # change upper and lower values for colors
-    green_upper = np.array([102, 255, 255])
+    green_upper = np.array([83, 255, 255])
     green_mask = cv2.inRange(hsv, green_lower, green_upper)
     
-    blue_lower = np.array([94, 80, 2])             # change upper and lower values for colors
-    blue_upper = np.array([120, 255, 255])
+    blue_lower = np.array([94, 80, 2])      # 94       # change upper and lower values for colors
+    blue_upper = np.array([110, 255, 255])   # 120
     blue_mask = cv2.inRange(hsv, blue_lower, blue_upper)
    
     # tracking green color
@@ -147,11 +147,14 @@ while True:
     key = cv2.waitKey(1)
     if key ==27:
         break
+    
+    time.sleep(0.1)  # gives time to robot
    
 cap.release()
 cv2.destroyAllWindows()
 
-# end = "0\n"
-# arduinoData.write(end.encode())
-
-# arduinoData.close()
+end = "9999\n"
+time.sleep(1)
+arduinoData.write(end.encode())
+time.sleep(1)
+arduinoData.close()
