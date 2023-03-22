@@ -184,37 +184,37 @@ void loop()
   wx -= gyro_roll_cal;
   wz -= gyro_yaw_cal; 
 
-  wy *= scaleG / 1000.0 * M_PI/180.0; // convert to deg/s then rads
-  wx *= scaleG / 1000.0 * M_PI/180.0;
-  wz *= scaleG / 1000.0 * M_PI/180.0; 
+  wy *= M_PI/180.0; // scaleG / 1000.0 * // convert to deg/s then rads
+  wx *= M_PI/180.0; // scaleG / 1000.0 * 
+  wz *= M_PI/180.0; // scaleG / 1000.0 *
 
-  //  Serial.print("Gyro: ");
-  //  Serial.print(wx);
-  //  Serial.print(" ");
-  //  Serial.print(wy);
-  //  Serial.print(" ");
-  //  Serial.println(wz);
+//    Serial.print("Gyro: ");
+//    Serial.print(wx);
+//    Serial.print(" ");
+//    Serial.print(wy);
+//    Serial.print(" ");
+//    Serial.println(wz);
   
 //________________Acc data (cm/s^2)_______________________//
   ax = myIMU.readFloatAccelX() * scaleA / 100.0;
   ay = myIMU.readFloatAccelY() * scaleA / 100.0;
   az = myIMU.readFloatAccelZ() * scaleA / 100.0;
 
-  data[0] = ax;
-  data[1] = ay;
-  data[2] = az; 
-
-  filtered_data[3] = alpha * data[0] + (1 - alpha) * filtered_data[0];
-  filtered_data[4] = alpha * data[1] + (1 - alpha) * filtered_data[1];
-  filtered_data[5] = alpha * data[2] + (1 - alpha) * filtered_data[2];
-
-  filtered_data[0] = filtered_data[3];
-  filtered_data[1] = filtered_data[4];
-  filtered_data[2] = filtered_data[5];
-
-  ax = filtered_data[3];
-  ay = filtered_data[4];
-  az = filtered_data[5];
+//  data[0] = ax;
+//  data[1] = ay;
+//  data[2] = az; 
+//
+//  filtered_data[3] = alpha * data[0] + (1 - alpha) * filtered_data[0];
+//  filtered_data[4] = alpha * data[1] + (1 - alpha) * filtered_data[1];
+//  filtered_data[5] = alpha * data[2] + (1 - alpha) * filtered_data[2];
+//
+//  filtered_data[0] = filtered_data[3];
+//  filtered_data[1] = filtered_data[4];
+//  filtered_data[2] = filtered_data[5];
+//
+//  ax = filtered_data[3];
+//  ay = filtered_data[4];
+//  az = filtered_data[5];
 
   //  Serial.print("Acc: ");
   //  Serial.print(ax);
