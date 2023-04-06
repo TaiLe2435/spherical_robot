@@ -281,126 +281,11 @@ void loop()
     
   }
 
-//  Serial.print("Acc: ");
-//  Serial.print(ax + ax0);
-//  Serial.print(" ");
-//  Serial.print(ay + ay0);
-//  Serial.print(" ");
-//  Serial.println(az + az0);
-
   roll = roll - roll0; //x
   pitch = pitch - pitch0; //y
   yaw = yaw - yaw0; //z
 
-//_____________POSITION_CALCULATIONS___________________//
-
-  // cPhi = cos(roll * M_PI/180);
-  // sPhi = sin(roll * M_PI/180);
-  // cTh = cos(pitch * M_PI/180);
-  // sTh = sin(pitch * M_PI/180);
-  // cPsi = cos(yaw * M_PI/180);
-  // sPsi = sin(yaw * M_PI/180);
-  
-  // R[0][0] = cTh*cPsi;
-  // R[0][1] = sPhi*sTh*cPsi - cPhi*sPsi;
-  // R[0][2] = cPhi*sTh*cPsi + sPhi*sPsi;
-  // R[1][0] = cTh*sPsi;
-  // R[1][1] = sPhi*sTh*sPsi + cPhi*cPsi;
-  // R[1][2] = cPhi*sTh*sPsi - sPhi*cPsi;
-  // R[2][0] = -sTh;
-  // R[2][1] = sPhi*cTh;
-  // R[2][2] = cPhi*cTh;
-
-  // //Matrix operations
-  // W[0][0] = 0;
-  // W[0][1] = -1* wz * 180/M_PI;
-  // W[0][2] = wy * 180/M_PI;
-  // W[1][0] = wz * 180/M_PI;
-  // W[1][1] = 0;
-  // W[1][2] = -1 * wx * 180/M_PI;
-  // W[2][0] = -1 * wy * 180/M_PI;
-  // W[2][1] = wx * 180/M_PI;
-  // W[2][2] = 0;
-  
-  // transpose(R);
-  // transform(ax+ax0, ay+ay0, az+az0, R, "linear");
-  // transform(0, 0, az0, T, "gravity");
-  // transform(v0[0][0], v0[1][0], v0[2][0], W, "centripetal");
-
-  // if(abs(aT[0][0]) < 0.2)
-  // {
-  //   aT[0][0] = 0.0;
-  // }
-  // if(abs(aT[1][0]) < 0.2)
-  // {
-  //   aT[1][0] = 0.0;
-  // }
-  // if(abs(aT[2][0]) < 0.6)
-  // {
-  //   aT[2][0] = 0.0;
-  // }
-
-  // A[0][0] = aT[0][0] * 100; // + aG[0][0]*1000; // + aCentrp[0][0]/10;
-  // A[1][0] = aT[1][0] * 100; // + aG[1][0]*1000; // + aCentrp[1][0]/10;
-  // A[2][0] = aT[2][0] * 100; // + aG[2][0]*1000; // + aCentrp[2][0]/10;
-
-//  Serial.print("Linear Acc: ");
-//  Serial.print(aT[0][0]);
-//  Serial.print(" ");
-//  Serial.print(aT[1][0]);
-//  Serial.print(" ");
-//  Serial.println(aT[2][0]);
-  
-  //Integration from acc to vel
-//   trapezoidal(A, a0, v0);
-//   a0[0][0] = A[0][0];
-//   a0[1][0] = A[1][0];
-//   a0[2][0] = A[2][0];
-// //  euler(zero, A, v0);
-//   if(v0[0][0] == s[0][0])
-//   {
-//     v0[0][0] = 0;
-//     s[0][0] = 0;
-//   }
-//     if(v0[1][0] == s[1][0])
-//   {
-//     v0[1][0] = 0;
-//     s[1][0] = 0;
-//   }
-//     if(v0[2][0] == s[2][0])
-//   {
-//     v0[2][0] = 0;
-//     s[2][0] = 0;
-//   }
-  
-//   v0[0][0] = s[0][0];
-//   v0[1][0] = s[1][0];
-//   v0[2][0] = s[2][0];
-
-//  Serial.print("Velocity: ");
-//  Serial.print(s[0][0]);
-//  Serial.print(" ");
-//  Serial.print(s[1][0]);
-//  Serial.print(" ");
-//  Serial.println(s[2][0]);
-  
-  //Integration from vel to pos
-  // trapezoidal(s, v0, x0);
-//  euler(A, s, x0);
-  // x0[0][0] = s[0][0];
-  // x0[1][0] = s[1][0];
-  // x0[2][0] = s[2][0];
-
-  // popAvg(s[1][0]);
-
 //_________________________Print Statements___________________________//
-
-//  Serial.print("Position: ");
-// //  Serial.print(s[0][0]);
-// //  Serial.print(" ");
-//  Serial.println(avg);
-// //  Serial.print(" ");
-// //  Serial.println(s[2][0]);
 
   Serial.print("Angles: ");
   Serial.print(roll);
@@ -410,34 +295,6 @@ void loop()
   Serial.println(yaw);
 
   delay(100);
-
-//__________EXAMPLE_________________________________//
-//    //Accelerometer
-//    Serial.print("\nAccelerometer:\n");
-//    Serial.print(" X1 = ");
-//    Serial.println(myIMU.readFloatAccelX(), 4);
-//    Serial.print(" Y1 = ");
-//    Serial.println(myIMU.readFloatAccelY(), 4);
-//    Serial.print(" Z1 = ");
-//    Serial.println(myIMU.readFloatAccelZ(), 4);
-//
-//    //Gyroscope
-//    Serial.print("\nGyroscope:\n");
-//    Serial.print(" X1 = ");
-//    Serial.println(myIMU.readFloatGyroX(), 4);
-//    Serial.print(" Y1 = ");
-//    Serial.println(myIMU.readFloatGyroY(), 4);
-//    Serial.print(" Z1 = ");
-//    Serial.println(myIMU.readFloatGyroZ(), 4);
-//
-//    //Thermometer
-//    Serial.print("\nThermometer:\n");
-//    Serial.print(" Degrees C1 = ");
-//    Serial.println(myIMU.readTempC(), 4);
-//    Serial.print(" Degrees F1 = ");
-//    Serial.println(myIMU.readTempF(), 4);
-//
-//    delay(1000);
 }
 
 //__________________Functions_____________________________//
