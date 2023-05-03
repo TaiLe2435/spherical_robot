@@ -82,19 +82,19 @@ class DPad(tk.Canvas):
         self.create_polygon(self.center-self.handle_size, self.center-self.handle_size,
                             self.center, self.center-2*self.handle_size,
                             self.center+self.handle_size, self.center-self.handle_size,
-                            fill="red")
+                            fill="red", outline="black")
         self.create_polygon(self.center+self.handle_size, self.center-self.handle_size,
                             self.center+2*self.handle_size, self.center,
                             self.center+self.handle_size, self.center+self.handle_size,
-                            fill="red")
+                            fill="red", outline="black")
         self.create_polygon(self.center+self.handle_size, self.center+self.handle_size,
                             self.center, self.center+2*self.handle_size,
                             self.center-self.handle_size, self.center+self.handle_size,
-                            fill="red")
+                            fill="red", outline="black")
         self.create_polygon(self.center-self.handle_size, self.center+self.handle_size,
                             self.center-2*self.handle_size, self.center,
                             self.center-self.handle_size, self.center-self.handle_size,
-                            fill="red")
+                            fill="red", outline="black")
 
 
     def move(self, event):
